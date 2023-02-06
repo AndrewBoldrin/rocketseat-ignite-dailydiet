@@ -7,6 +7,7 @@ import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
 } from "@expo-google-fonts/nunito-sans";
+import { Loading } from "components/Loading";
 
 export default function App() {
   const [fontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold });
@@ -18,11 +19,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? (
-        <Text>Font carregada</Text>
-      ) : (
-        <Text>A Foi não foi carregada</Text>
-      )}
+      {fontsLoaded ? <Text>Font carregada</Text> : <Loading />}
     </ThemeProvider>
   );
 }
