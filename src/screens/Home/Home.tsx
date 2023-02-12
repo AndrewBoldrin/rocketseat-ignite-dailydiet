@@ -4,6 +4,7 @@ import { InfoCard } from "components/InfoCard";
 import { Button } from "components/Button";
 import { Plus } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
+import { Meals } from "components/Meals";
 
 export function Home() {
   const theme = useTheme();
@@ -22,6 +23,8 @@ export function Home() {
       <Button type="ACTION" text="Nova refeição">
         <Plus size={18} color={theme.COLORS.WHITE} />
       </Button>
+
+      <Meals />
     </Container>
   );
 }
