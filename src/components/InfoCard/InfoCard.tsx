@@ -31,7 +31,7 @@ export function InfoCard({
       {HEADERCARD && <NavigationButton type={value} />}
       {HEADER && <NavigationButton type={value} isOpen />}
 
-      <Title>{title}</Title>
+      <Title type={type}>{title}</Title>
       <SubTitle>{subtitle}</SubTitle>
     </Container>
   );
