@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components/native";
 
 export type CardValue = "NORMAL" | "GOOD" | "BAD";
-export type CardType = "HEADERCARD" | "HEADER" | "INFOCARD";
+export type CardType = "HEADERCARD" | "HEADER" | "INFOCARD" | "FORMHEADER";
 
 type Props = {
   type?: CardType;
@@ -38,6 +38,13 @@ export const Container = styled.View<Props>`
       padding: 16px;
       margin-bottom: 12px;
     `};
+
+  ${({ type }) =>
+    type === "FORMHEADER" &&
+    css`
+      flex-direction: row;
+      padding: 56px 24px 52px 24px;
+    `};
 `;
 
 export const Title = styled.Text<Props>`
@@ -45,17 +52,24 @@ export const Title = styled.Text<Props>`
   font-size: ${({ theme }) => theme.FONT_SIZE.XXL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
 
-  ${({ type }) =>
+  ${({ type, theme }) =>
     type === "INFOCARD" &&
     css`
       margin-bottom: 8px;
-      font-size: ${({ theme }) => theme.FONT_SIZE.XL}px;
+      font-size: ${theme.FONT_SIZE.XL}px;
     `};
 
   ${({ type }) =>
     type === "HEADERCARD" &&
     css`
       margin-bottom: 2px;
+    `};
+
+  ${({ type, theme }) =>
+    type === "FORMHEADER" &&
+    css`
+      position: absolute;
+      font-size: ${theme.FONT_SIZE.LG}px;
     `};
 `;
 
