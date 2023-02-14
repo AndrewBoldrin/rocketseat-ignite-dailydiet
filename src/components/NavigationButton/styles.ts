@@ -16,10 +16,20 @@ export const Container = styled(TouchableOpacity)<Props>`
 
 export const Go = styled(ArrowUpRight).attrs<Props>(({ theme, color }) => ({
   size: 24,
-  color: color === "GOOD" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+  color:
+    color === "GOOD"
+      ? theme.COLORS.GREEN_DARK
+      : color === "BAD"
+      ? theme.COLORS.RED_DARK
+      : theme.COLORS.GRAY_200,
 }))``;
 
 export const GoBack = styled(ArrowLeft).attrs<Props>(({ theme, color }) => ({
   size: 24,
-  color: color === "GOOD" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+  color:
+    color === "GOOD"
+      ? theme.COLORS.GREEN_DARK
+      : color === "BAD"
+      ? theme.COLORS.RED_DARK
+      : theme.COLORS.GRAY_200,
 }))``;
