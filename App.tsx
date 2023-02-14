@@ -7,7 +7,7 @@ import {
   NunitoSans_700Bold,
 } from "@expo-google-fonts/nunito-sans";
 import { Loading } from "components/Loading";
-import { Stats } from "screens/Stats";
+import { Form } from "screens/Form";
 
 export default function App() {
   const [fontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold });
@@ -19,7 +19,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Stats /> : <Loading />}
+      {fontsLoaded ? <Form /> : <Loading />}
     </ThemeProvider>
   );
 }
