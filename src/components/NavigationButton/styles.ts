@@ -8,14 +8,6 @@ export type Props = {
   color?: CardValue;
 };
 
-// export const Container = styled(TouchableOpacity)<Props>`
-//   position: absolute;
-//   width: 24px;
-//   height: 24px;
-//   top: 8px;
-//   ${({ isOpen }) => (isOpen ? "left: 8px" : "right: 8px")}
-// `;
-
 export const Container = styled(TouchableOpacity)<Props>`
   width: 24px;
   height: 24px;
