@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/nunito-sans";
 import { Loading } from "components/Loading";
 import { Feedback } from "screens/Feedback";
+import { ViewMeal } from "screens/ViewMeal";
 
 export default function App() {
   const [fontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold });
@@ -19,7 +20,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Feedback /> : <Loading />}
+      {fontsLoaded ? <ViewMeal /> : <Loading />}
     </ThemeProvider>
   );
 }
