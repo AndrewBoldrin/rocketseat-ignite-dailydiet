@@ -12,13 +12,18 @@ type Props = {
 };
 
 export const Container = styled(TouchableOpacity)<Props>`
-  flex: 1;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  min-height: 50px;
-  max-height: 50px;
   border-radius: 6px;
+
+  ${({ theme, type }) =>
+    type !== "NAVEGATION" &&
+    css`
+      flex: 1;
+      min-height: 50px;
+      max-height: 50px;
+    `}
 
   ${({ theme, type }) =>
     type === "ACTION" &&
@@ -41,13 +46,17 @@ export const Container = styled(TouchableOpacity)<Props>`
     ${({ theme, type }) =>
     type === "NAVEGATION" &&
     css`
-      max-width: 191px;
+      padding: 16px 24px;
       background-color: ${theme.COLORS.GRAY_200};
     `}
 `;
 
 export const ActionText = styled(Text)<Props>`
-  margin-left: 12px;
+  ${({ theme, type }) =>
+    type !== "NAVEGATION" &&
+    css`
+      margin-left: 12px;
+    `}
 
   ${({ theme }) => css`
     color: ${theme.COLORS.WHITE};
