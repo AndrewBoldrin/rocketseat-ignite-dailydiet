@@ -8,3 +8,7 @@ export const Container = styled.View`
   padding-left: 24px;
   padding-right: 24px;
 `;
+
+export const FeedbackImage = styled.Image`
+  margin-top: 40px;
+`;
