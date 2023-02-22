@@ -1,6 +1,8 @@
 import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
+import { Modal } from "components/Modal";
 import { PencilSimpleLine, Trash } from "phosphor-react-native";
+import { useState } from "react";
 import { useTheme } from "styled-components/native";
 import {
   Container,
@@ -15,9 +17,14 @@ import {
 } from "./styles";
 
 export function ViewMeal() {
+  const [onModalOpen, setOnModalOpen] = useState(true);
   const theme = useTheme();
 
   const inDiet = true;
+
+  function onModalClose() {
+    setOnModalOpen(false);
+  }
 
   return (
     <Container>
@@ -48,10 +55,20 @@ export function ViewMeal() {
           <PencilSimpleLine color={theme.COLORS.WHITE} />
         </Button>
 
-        <Button type="DELETE" text="Excluir refeição">
+        <Button
+          type="DELETE"
+          text="Excluir refeição"
+          onPress={() => setOnModalOpen(true)}
+        >
           <Trash />
         </Button>
       </Content>
+
+      <Modal
+        isOpen={onModalOpen}
+        onClose={onModalClose}
+        title="Deseja realmente excluir o registro da refeição?"
+      />
     </Container>
   );
 }
