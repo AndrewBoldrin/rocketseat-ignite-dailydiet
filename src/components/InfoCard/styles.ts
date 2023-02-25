@@ -43,7 +43,7 @@ export const Container = styled.View<Props>`
     type === "FORMHEADER" &&
     css`
       flex-direction: row;
-      padding: 56px 24px 52px 24px;
+      padding: 57px 24px 52px 24px;
     `};
 `;
 
