@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FlatList } from "react-native";
 import { Container, DataText, MealsContainer } from "./styles";
 import { Meal } from "components/Meal";
+import { useNavigation } from "@react-navigation/native";
 
 const MealData = {
   date: "12.08.22",
@@ -84,6 +85,12 @@ const MealData3 = {
 export function Meals() {
   const [MealsData, setMealsData] = useState([MealData, MealData2, MealData3]);
 
+  const navigation = useNavigation();
+
+  function handleMealClick() {
+    navigation.navigate("meal", { id: "1" });
+  }
+
   return (
     <Container>
       <FlatList
@@ -96,7 +103,12 @@ export function Meals() {
               data={item.meals}
               keyExtractor={(item) => item.time}
               renderItem={({ item }) => (
-                <Meal time={item.time} meal={item.meal} inDiet={item.inDiet} />
+                <Meal
+                  time={item.time}
+                  meal={item.meal}
+                  inDiet={item.inDiet}
+                  onPress={handleMealClick}
+                />
               )}
             />
           </MealsContainer>

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
 import { Input } from "components/Input";
@@ -11,10 +13,29 @@ import {
   ButtonOptionContainer,
 } from "./styles";
 
+type RouteParams = {
+  mealId: string;
+};
+
 export function Form() {
+  const route = useRoute();
+  const { mealId } = route.params as RouteParams;
+  const navigation = useNavigation();
+
+  function handleAddNewMeal() {
+    navigation.navigate("feedback", { inDiet: true });
+  }
+
+  function handleUpdateMeal() {
+    navigation.navigate("meal", { id: "" });
+  }
+
   return (
     <Container>
-      <InfoCard type="FORMHEADER" title="Nova Refeição" />
+      <InfoCard
+        type="FORMHEADER"
+        title={mealId ? "Editar refeição" : "Nova refeição"}
+      />
 
       <Content>
         <FormContainer>
@@ -38,7 +59,11 @@ export function Form() {
             </Button>
           </ButtonOptionContainer>
         </FormContainer>
-        <Button text="Cadastrar refeição"></Button>
+        {mealId ? (
+          <Button text="Salvar alterações" onPress={handleUpdateMeal}></Button>
+        ) : (
+          <Button text="Cadastrar refeição" onPress={handleAddNewMeal}></Button>
+        )}
       </Content>
     </Container>
   );

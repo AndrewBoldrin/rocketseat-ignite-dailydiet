@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
 import { Modal } from "components/Modal";
@@ -17,13 +18,18 @@ import {
 } from "./styles";
 
 export function ViewMeal() {
-  const [onModalOpen, setOnModalOpen] = useState(true);
+  const [onModalOpen, setOnModalOpen] = useState(false);
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const inDiet = true;
 
   function onModalClose() {
     setOnModalOpen(false);
+  }
+
+  function handleEditMeal() {
+    navigation.navigate("form", { mealId: "1" });
   }
 
   return (
@@ -51,6 +57,7 @@ export function ViewMeal() {
           type="ACTION"
           text="Editar refeição"
           style={{ marginTop: "auto", marginBottom: 9 }}
+          onPress={handleEditMeal}
         >
           <PencilSimpleLine color={theme.COLORS.WHITE} />
         </Button>

@@ -4,7 +4,7 @@ export declare global {
       home: undefined;
       stats: undefined;
       form: {
-        MealId?: string;
+        mealId: string;
       };
       meal: {
         id: string;
