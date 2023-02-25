@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 type OptionType = {
   InDiet?: boolean;

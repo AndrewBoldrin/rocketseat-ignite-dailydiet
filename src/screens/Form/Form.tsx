@@ -22,6 +22,8 @@ export function Form() {
   const { mealId } = route.params as RouteParams;
   const navigation = useNavigation();
 
+  const [inDiet, setInDiet] = useState<boolean | null>(null);
+
   function handleAddNewMeal() {
     navigation.navigate("feedback", { inDiet: true });
   }
@@ -50,11 +52,22 @@ export function Form() {
           <OptionsLabel>Está dentro da dieta ?</OptionsLabel>
 
           <ButtonOptionContainer>
-            <Button text="Sim" type="OPTION" style={{ marginRight: 8 }}>
+            <Button
+              text="Sim"
+              type="OPTION"
+              inDiet={inDiet ? inDiet : null}
+              style={{ marginRight: 8 }}
+              onPress={() => setInDiet(true)}
+            >
               <InDietIcon InDiet />
             </Button>
 
-            <Button text="Não" type="OPTION">
+            <Button
+              text="Não"
+              inDiet={!inDiet ? inDiet : null}
+              type="OPTION"
+              onPress={() => setInDiet(false)}
+            >
               <InDietIcon />
             </Button>
           </ButtonOptionContainer>

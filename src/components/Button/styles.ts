@@ -9,6 +9,7 @@ export type ButtonTypeStyleProps =
 
 type Props = {
   type?: ButtonTypeStyleProps;
+  inDiet?: boolean | null;
 };
 
 export const Container = styled(TouchableOpacity)<Props>`
@@ -37,10 +38,19 @@ export const Container = styled(TouchableOpacity)<Props>`
       border: 1px solid ${theme.COLORS.GRAY_100};
     `}
 
-  ${({ theme, type }) =>
+  ${({ theme, type, inDiet }) =>
     type === "OPTION" &&
     css`
-      background-color: ${theme.COLORS.GRAY_600};
+      background-color: ${inDiet === null
+        ? theme.COLORS.GRAY_600
+        : inDiet
+        ? theme.COLORS.GREEN_LIGHT
+        : theme.COLORS.RED_LIGHT};
+      border: ${inDiet === null
+        ? `none`
+        : inDiet
+        ? `1px solid ${theme.COLORS.GREEN_DARK}`
+        : `1px solid ${theme.COLORS.RED_DARK}`};
     `}
 
     ${({ theme, type }) =>
