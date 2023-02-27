@@ -8,9 +8,9 @@ type Props = TextInputProps & {
 
 export function Input({ label, type = "INPUT", ...rest }: Props) {
   return (
-    <Container {...rest}>
+    <Container type={type} {...rest}>
       <InputLabel>{label}</InputLabel>
-      <InputText type={type} />
+      <InputText type={type} {...rest} />
     </Container>
   );
 }
