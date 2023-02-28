@@ -41,12 +41,12 @@ export const Container = styled(TouchableOpacity)<Props>`
   ${({ theme, type, inDiet }) =>
     type === "OPTION" &&
     css`
-      background-color: ${inDiet === null
+      background-color: ${inDiet === undefined
         ? theme.COLORS.GRAY_600
         : inDiet
         ? theme.COLORS.GREEN_LIGHT
         : theme.COLORS.RED_LIGHT};
-      border: ${inDiet === null
+      border: ${inDiet === undefined
         ? `none`
         : inDiet
         ? `1px solid ${theme.COLORS.GREEN_DARK}`
@@ -62,7 +62,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 `;
 
 export const ActionText = styled(Text)<Props>`
-  ${({ theme, type }) =>
+  ${({ type }) =>
     type !== "NAVEGATION" &&
     css`
       margin-left: 12px;

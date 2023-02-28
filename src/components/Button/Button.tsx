@@ -6,7 +6,7 @@ type Props = TouchableOpacityProps & {
   type?: ButtonTypeStyleProps;
   text: string;
   children?: ReactElement;
-  inDiet?: boolean | null;
+  inDiet?: boolean;
 };
 
 export function Button({
