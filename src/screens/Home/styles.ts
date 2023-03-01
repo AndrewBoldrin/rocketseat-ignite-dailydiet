@@ -14,3 +14,17 @@ export const MealsText = styled.Text`
   margin-top: 40px;
   margin-bottom: 8px;
 `;
+
+export const MealsContainer = styled.View`
+  flex: 1;
+  margin-top: 32px;
+`;
+
+export const DataText = styled.Text`
+  font-size: ${({ theme }) => theme.FONT_SIZE.LG}px;
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+`;
+
+export const Meals = styled.View`
+  margin-bottom: 32px;
+`;
