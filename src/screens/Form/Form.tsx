@@ -42,7 +42,7 @@ export function Form() {
     if (
       date.length === 0 ||
       meal.inDiet === undefined ||
-      date.length < 8 ||
+      date.length < 6 ||
       meal.time.length < 5
     )
       return true;
@@ -63,11 +63,14 @@ export function Form() {
         "Verifique se todos os campos estão preenchidos! ou complete-os"
       );
     else {
-      setMeal({ ...meal, id: newMealId });
+      try {
+        setMeal({ ...meal, id: newMealId });
+        await mealAdd(date, meal);
 
-      await mealAdd(date, meal);
-
-      navigation.navigate("feedback", { inDiet: true });
+        navigation.navigate("feedback", { inDiet: true });
+      } catch (error) {
+        throw error;
+      }
     }
   }
 
@@ -100,7 +103,7 @@ export function Form() {
               style={{ marginRight: 20 }}
               value={formatDate(date)}
               maxLength={8}
-              onChangeText={(text) => setDate(formatDate(text))}
+              onChangeText={(text) => setDate(text)}
             />
             <Input
               label="Hora"

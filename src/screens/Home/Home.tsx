@@ -16,11 +16,14 @@ import { useCallback, useState } from "react";
 import { mealGetAll } from "storage/Meal/mealGetAll";
 import { Meal } from "components/Meal";
 import { FlatList } from "react-native";
+import { formatDate } from "utils/formatDate";
+import { orderByDate } from "utils/orderByDate";
 
 export function Home() {
   const theme = useTheme();
   const navigation = useNavigation();
   const [meals, setMeals] = useState<mealStorageDTO>({});
+  const orederedMeals = orderByDate(Object.keys(meals));
 
   function handleNewMeal() {
     navigation.navigate("form", { mealId: "" });
@@ -62,11 +65,11 @@ export function Home() {
 
       <MealsContainer>
         <FlatList
-          data={Object.keys(meals)}
+          data={orederedMeals}
           keyExtractor={(item) => item}
           renderItem={({ item }) => (
             <Meals>
-              <DataText>{item}</DataText>
+              <DataText>{formatDate(item)}</DataText>
               <FlatList
                 data={meals[item]}
                 keyExtractor={(item) => item.id}
