@@ -1,10 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
 import { Modal } from "components/Modal";
 import { PencilSimpleLine, Trash } from "phosphor-react-native";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { mealGetAll } from "storage/Meal/mealGetAll";
+import { mealGetById } from "storage/Meal/mealGetById";
+import { mealDTO } from "storage/Meal/mealStorageDTO";
 import { useTheme } from "styled-components/native";
+import { formatDate } from "utils/formatDate";
 import {
   Container,
   Content,
@@ -17,10 +25,18 @@ import {
   InDietText,
 } from "./styles";
 
+type RouteParams = {
+  date: string;
+  id: string;
+};
+
 export function ViewMeal() {
   const [onModalOpen, setOnModalOpen] = useState(false);
   const theme = useTheme();
   const navigation = useNavigation();
+  const route = useRoute();
+  const { id, date } = route.params as RouteParams;
+  const [meal, setMeal] = useState<mealDTO>();
 
   const inDiet = true;
 
@@ -32,6 +48,16 @@ export function ViewMeal() {
     navigation.navigate("form", { mealId: "1" });
   }
 
+  async function fetchMeal() {
+    const meal = await mealGetById(id, date);
+    setMeal(meal);
+  }
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeal();
+    }, [])
+  );
+
   return (
     <Container>
       <InfoCard
@@ -40,17 +66,19 @@ export function ViewMeal() {
         value={inDiet ? "GOOD" : "BAD"}
       />
       <Content>
-        <MealName>Sanduíche</MealName>
-        <MealDescription>
-          Sanduíche de pão integral com atum e salada de alface e tomate
-        </MealDescription>
+        <MealName>{meal?.name}</MealName>
+        <MealDescription>{meal?.description}</MealDescription>
 
         <DataTime>Data e hora</DataTime>
-        <DataTimeValue>12/08/2022 às 16:00</DataTimeValue>
+        <DataTimeValue>{`${formatDate(date, "/")} às ${
+          meal?.time
+        }`}</DataTimeValue>
 
         <InDietLabel>
-          <InDietIcon inDiet />
-          <InDietText>dentro da dieta</InDietText>
+          <InDietIcon inDiet={meal?.inDiet} />
+          <InDietText>
+            {inDiet ? "dentro da dieta" : "fora da dieta"}
+          </InDietText>
         </InDietLabel>
 
         <Button

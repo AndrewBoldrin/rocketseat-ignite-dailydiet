@@ -30,8 +30,8 @@ export function Home() {
     navigation.navigate("form", { mealId: "" });
   }
 
-  function handleMealClick() {
-    navigation.navigate("meal", { id: "1" });
+  function handleMealClick(mealId: string, mealDate: string) {
+    navigation.navigate("meal", { id: mealId, date: mealDate });
   }
 
   async function fetchMeals() {
@@ -68,18 +68,18 @@ export function Home() {
         <FlatList
           data={orderByRecentDate(Object.keys(meals))}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => (
+          renderItem={({ item: date }) => (
             <Meals>
-              <DataText>{formatDate(item)}</DataText>
+              <DataText>{formatDate(date)}</DataText>
               <FlatList
-                data={orderTime(meals[item])}
+                data={orderTime(meals[date])}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <Meal
                     time={item.time}
                     meal={item.name}
                     inDiet={item.inDiet}
-                    onPress={handleMealClick}
+                    onPress={() => handleMealClick(item.id, date)}
                   />
                 )}
               />

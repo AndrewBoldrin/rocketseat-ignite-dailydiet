@@ -74,7 +74,7 @@ export function Form() {
   }
 
   function handleUpdateMeal() {
-    navigation.navigate("meal", { id: "" });
+    navigation.navigate("meal", { id: "", date: "" });
   }
 
   return (

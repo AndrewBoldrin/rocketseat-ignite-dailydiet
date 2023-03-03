@@ -8,6 +8,7 @@ export declare global {
       };
       meal: {
         id: string;
+        date: string;
       };
       feedback: {
         inDiet: boolean;
