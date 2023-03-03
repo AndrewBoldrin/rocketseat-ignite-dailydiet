@@ -17,13 +17,14 @@ import { mealGetAll } from "storage/Meal/mealGetAll";
 import { Meal } from "components/Meal";
 import { FlatList } from "react-native";
 import { formatDate } from "utils/formatDate";
-import { orderByDate } from "utils/orderByDate";
+import { orderTime, orderByRecentDate } from "utils/order";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLLENCTION_MEALS } from "storage/storageConfig";
 
 export function Home() {
   const theme = useTheme();
   const navigation = useNavigation();
   const [meals, setMeals] = useState<mealStorageDTO>({});
-  const orederedMeals = orderByDate(Object.keys(meals));
 
   function handleNewMeal() {
     navigation.navigate("form", { mealId: "" });
@@ -65,13 +66,13 @@ export function Home() {
 
       <MealsContainer>
         <FlatList
-          data={orederedMeals}
+          data={orderByRecentDate(Object.keys(meals))}
           keyExtractor={(item) => item}
           renderItem={({ item }) => (
             <Meals>
               <DataText>{formatDate(item)}</DataText>
               <FlatList
-                data={meals[item]}
+                data={orderTime(meals[item])}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <Meal
