@@ -64,10 +64,9 @@ export function Form() {
       );
     else {
       try {
-        setMeal({ ...meal, id: newMealId });
-        await mealAdd(date, meal);
+        await mealAdd(date, { ...meal, id: newMealId });
 
-        navigation.navigate("feedback", { inDiet: true });
+        navigation.navigate("feedback", { inDiet: meal.inDiet ?? false });
       } catch (error) {
         throw error;
       }
