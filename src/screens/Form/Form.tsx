@@ -94,6 +94,7 @@ export function Form() {
           <Input
             label="Descrição"
             type="TEXTAREA"
+            style={{ textAlignVertical: "top" }}
             onChangeText={(text) => setMeal({ ...meal, description: text })}
           />
 
