@@ -1,5 +1,9 @@
-import { useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
 import { Input } from "components/Input";
@@ -18,9 +22,11 @@ import { generateId } from "utils/generateId";
 import { formatDate } from "utils/formatDate";
 import { Alert } from "react-native";
 import { formatTime } from "utils/formatTime";
+import { mealGetById } from "storage/Meal/mealGetById";
 
 type RouteParams = {
-  mealId: string;
+  id: string;
+  date: string;
 };
 
 const initalMealData = {
@@ -32,17 +38,17 @@ const initalMealData = {
 
 export function Form() {
   const route = useRoute();
-  const { mealId } = route.params as RouteParams;
+  const { id, date } = route.params as RouteParams;
   const navigation = useNavigation();
 
-  const [date, setDate] = useState("");
+  const [inputDate, setInputDate] = useState("");
   const [meal, setMeal] = useState<mealDTO>(initalMealData);
 
   function isFieldEmpty() {
     if (
-      date.length === 0 ||
+      inputDate.length === 0 ||
       meal.inDiet === undefined ||
-      date.length < 6 ||
+      inputDate.length < 6 ||
       meal.time.length < 5
     )
       return true;
@@ -64,7 +70,7 @@ export function Form() {
       );
     else {
       try {
-        await mealAdd(date, { ...meal, id: newMealId });
+        await mealAdd(inputDate, { ...meal, id: newMealId });
 
         navigation.navigate("feedback", { inDiet: meal.inDiet ?? false });
       } catch (error) {
@@ -73,26 +79,40 @@ export function Form() {
     }
   }
 
-  function handleUpdateMeal() {
-    navigation.navigate("meal", { id: "", date: "" });
+  async function handleUpdateMeal() {
+    console.log("updating");
   }
+
+  async function fetchMeal() {
+    if (id && date) {
+      const meal = await mealGetById(id, date);
+      setMeal(meal);
+    }
+  }
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeal();
+    }, [])
+  );
 
   return (
     <Container>
       <InfoCard
         type="FORMHEADER"
-        title={mealId ? "Editar refeição" : "Nova refeição"}
+        title={id ? "Editar refeição" : "Nova refeição"}
       />
 
       <Content>
         <FormContainer>
           <Input
             label="Nome"
+            value={meal.name}
             onChangeText={(text) => setMeal({ ...meal, name: text })}
           />
           <Input
             label="Descrição"
             type="TEXTAREA"
+            value={meal.description}
             style={{ textAlignVertical: "top" }}
             onChangeText={(text) => setMeal({ ...meal, description: text })}
           />
@@ -101,9 +121,9 @@ export function Form() {
             <Input
               label="Data"
               style={{ marginRight: 20 }}
-              value={formatDate(date)}
+              value={date ? formatDate(date) : formatDate(inputDate)}
               maxLength={8}
-              onChangeText={(text) => setDate(text)}
+              onChangeText={(text) => setInputDate(text)}
             />
             <Input
               label="Hora"
@@ -137,7 +157,7 @@ export function Form() {
             </Button>
           </ButtonOptionContainer>
         </FormContainer>
-        {mealId ? (
+        {id ? (
           <Button text="Salvar alterações" onPress={handleUpdateMeal}></Button>
         ) : (
           <Button text="Cadastrar refeição" onPress={handleAddNewMeal}></Button>

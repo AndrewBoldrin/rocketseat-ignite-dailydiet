@@ -45,7 +45,7 @@ export function ViewMeal() {
   }
 
   function handleEditMeal() {
-    navigation.navigate("form", { mealId: "1" });
+    navigation.navigate("form", { id: id, date: date });
   }
 
   async function fetchMeal() {
@@ -99,11 +99,15 @@ export function ViewMeal() {
         </Button>
       </Content>
 
-      <Modal
-        isOpen={onModalOpen}
-        onClose={onModalClose}
-        title="Deseja realmente excluir o registro da refeição?"
-      />
+      {meal && (
+        <Modal
+          isOpen={onModalOpen}
+          date={date}
+          id={id}
+          onClose={onModalClose}
+          title="Deseja realmente excluir o registro da refeição?"
+        />
+      )}
     </Container>
   );
 }
