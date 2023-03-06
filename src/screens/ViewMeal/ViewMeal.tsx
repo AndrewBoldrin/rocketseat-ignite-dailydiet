@@ -55,7 +55,7 @@ export function ViewMeal() {
   useFocusEffect(
     useCallback(() => {
       fetchMeal();
-    }, [])
+    }, [date])
   );
 
   return (

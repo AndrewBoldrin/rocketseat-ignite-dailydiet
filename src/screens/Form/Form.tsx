@@ -23,6 +23,7 @@ import { formatDate } from "utils/formatDate";
 import { Alert } from "react-native";
 import { formatTime } from "utils/formatTime";
 import { mealGetById } from "storage/Meal/mealGetById";
+import { mealUpdate } from "storage/Meal/mealUpdate";
 
 type RouteParams = {
   id: string;
@@ -45,13 +46,10 @@ export function Form() {
   const [meal, setMeal] = useState<mealDTO>(initalMealData);
 
   function isFieldEmpty() {
-    if (
-      inputDate.length === 0 ||
-      meal.inDiet === undefined ||
-      inputDate.length < 6 ||
-      meal.time.length < 5
-    )
+    if (date.length === 0 && inputDate.length === 0 && inputDate.length < 6)
       return true;
+
+    if (meal.inDiet === undefined || meal.time.length < 5) return true;
 
     Object.values(meal).map((value: string | boolean) => {
       if (value.toString().length === 0) return true;
@@ -80,13 +78,28 @@ export function Form() {
   }
 
   async function handleUpdateMeal() {
-    console.log("updating");
+    console.log("meal: ", meal);
+    if (isFieldEmpty())
+      Alert.alert(
+        "Campo vazio",
+        "Verifique se todos os campos estão preenchidos! ou complete-os"
+      );
+    else {
+      try {
+        await mealUpdate(id, date, inputDate, meal);
+
+        navigation.navigate("meal", { id: id, date: inputDate });
+      } catch (error) {
+        throw error;
+      }
+    }
   }
 
   async function fetchMeal() {
     if (id && date) {
       const meal = await mealGetById(id, date);
       setMeal(meal);
+      setInputDate(date);
     }
   }
   useFocusEffect(
@@ -121,7 +134,7 @@ export function Form() {
             <Input
               label="Data"
               style={{ marginRight: 20 }}
-              value={date ? formatDate(date) : formatDate(inputDate)}
+              value={formatDate(inputDate)}
               maxLength={8}
               onChangeText={(text) => setInputDate(text)}
             />
