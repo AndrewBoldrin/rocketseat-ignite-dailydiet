@@ -52,6 +52,7 @@ export function ViewMeal() {
     const meal = await mealGetById(id, date);
     setMeal(meal);
   }
+
   useFocusEffect(
     useCallback(() => {
       fetchMeal();
@@ -63,7 +64,7 @@ export function ViewMeal() {
       <InfoCard
         type="FORMHEADER"
         title="Refeição"
-        value={inDiet ? "GOOD" : "BAD"}
+        value={meal?.inDiet ? "GOOD" : "BAD"}
       />
       <Content>
         <MealName>{meal?.name}</MealName>
