@@ -23,6 +23,7 @@ export function Home() {
   const theme = useTheme();
   const navigation = useNavigation();
   const [meals, setMeals] = useState<mealStorageDTO>({});
+  const [percentInDiet, setPercentInDiet] = useState<number>(0);
 
   function handleNewMeal() {
     navigation.navigate("form", { id: "", date: "" });
@@ -36,9 +37,27 @@ export function Home() {
     try {
       const storagedMeals = await mealGetAll();
       setMeals(storagedMeals);
-      console.log(storagedMeals);
+
+      const percentInDiet = getStats(storagedMeals);
+      setPercentInDiet(percentInDiet);
+
       return meals;
     } catch (error) {}
+  }
+
+  function getStats(storagedMeals: mealStorageDTO) {
+    var numTotalMeals = 0;
+    var numMealsInDiet = 0;
+
+    Object.keys(storagedMeals).map((key) => {
+      storagedMeals[key].forEach((meal) => {
+        numTotalMeals += 1;
+        if (meal.inDiet) numMealsInDiet += 1;
+      });
+    });
+    const percentInDiet = (numMealsInDiet / numTotalMeals) * 100;
+
+    return percentInDiet;
   }
 
   useFocusEffect(
@@ -51,7 +70,7 @@ export function Home() {
     <Container>
       <Header />
       <InfoCard
-        title="90,86%"
+        title={`${percentInDiet.toFixed(2)}%`}
         subtitle="das refeições dentro da dieta"
         type="HEADERCARD"
         value="GOOD"

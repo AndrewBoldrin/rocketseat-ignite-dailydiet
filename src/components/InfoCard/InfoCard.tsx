@@ -7,7 +7,7 @@ export type CardType = "HEADERCARD" | "HEADER" | "INFOCARD" | "FORMHEADER";
 type Props = {
   type?: CardType;
   value?: CardValue;
-  title: string;
+  title: string | number;
   subtitle?: string;
 };
 
